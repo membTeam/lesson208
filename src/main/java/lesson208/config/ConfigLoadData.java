@@ -34,7 +34,5 @@ public class ConfigLoadData {
         } catch (Exception ex) {
             System.out.println("err: " + ex.getMessage());
         }
-
     }
-
 }

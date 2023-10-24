@@ -3,7 +3,7 @@ package lesson208.servises;
 import lesson208.config.ConfigLoadData;
 import lesson208.exceptionAPI.EmployeeNotDataException;
 import lesson208.models.Emploee;
-import lesson208.models.EmploeeService;
+import lesson208.models.EmploeeResponce;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,14 +25,13 @@ public class EmploeeControllerServEmpl implements EmploeeControllerServ {
     }
 
     private void existsDepartment(int department){
-        var count = (int) setDepartment.stream()
+        var count = setDepartment.stream()
                 .filter(item -> item == department)
                 .count();
 
         if (count == 0) {
             throw new EmployeeNotDataException("Отдел не найден");
         }
-
     }
 
 
@@ -44,11 +43,10 @@ public class EmploeeControllerServEmpl implements EmploeeControllerServ {
          return listEmploee.stream()
                  .filter( item -> item.getDepartment() == department)
                  .collect(Collectors.toList());
-
     }
 
     @Override
-    public List<EmploeeService> allEmploee() {
+    public List<EmploeeResponce> allEmploee() {
 
         var result = setDepartment.stream().map( item -> {
             var lsEmploee = listEmploee
@@ -56,9 +54,7 @@ public class EmploeeControllerServEmpl implements EmploeeControllerServ {
                     .filter(emploee -> emploee.getDepartment() == item)
                     .collect(Collectors.toList());
 
-            var emploeeServuce = new EmploeeService(item, lsEmploee);
-
-            return emploeeServuce;
+            return new EmploeeResponce(item, lsEmploee);
         });
 
         return result.collect(Collectors.toList());
