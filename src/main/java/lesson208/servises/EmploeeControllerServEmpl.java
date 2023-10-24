@@ -24,14 +24,11 @@ public class EmploeeControllerServEmpl implements EmploeeControllerServ {
                 .collect(Collectors.toSet());
     }
 
-    private void existsDepartment(int department){
-        var count = setDepartment.stream()
+    private void existsDepartment(int department) throws EmployeeNotDataException {
+        setDepartment.stream()
                 .filter(item -> item == department)
-                .count();
-
-        if (count == 0) {
-            throw new EmployeeNotDataException("Отдел не найден");
-        }
+                .findAny()
+                .orElseThrow(()-> {throw new EmployeeNotDataException("Отдел не найден"); });
     }
 
 
