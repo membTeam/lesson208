@@ -6,12 +6,12 @@ import lesson208.models.EmploeeService;
 import java.util.List;
 import java.util.Set;
 
-public interface EmploeeServ {
+public interface EmploeeControllerServ {
     List<Emploee> allEmploeeForDepartment(int department);
     List<EmploeeService> allEmploee();
 
-    Integer minSalary(int department);
-    Integer maxSalary(int department);
+    Emploee minSalary(int department);
+    Emploee maxSalary(int department);
 
     Integer amountDepartment();
 
