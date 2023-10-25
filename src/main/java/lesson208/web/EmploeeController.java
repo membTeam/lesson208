@@ -4,6 +4,7 @@ import lesson208.config.ConfigLoadData;
 import lesson208.models.Emploee;
 import lesson208.models.EmploeeResponce;
 import lesson208.servises.EmploeeControllerServEmpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

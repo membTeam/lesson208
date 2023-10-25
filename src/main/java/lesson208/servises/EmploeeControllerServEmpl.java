@@ -1,20 +1,23 @@
 package lesson208.servises;
 
 import lesson208.config.ConfigLoadData;
+import lesson208.exceptionAPI.EmployeeAccessErrorException;
 import lesson208.exceptionAPI.EmployeeNotDataException;
 import lesson208.models.Emploee;
 import lesson208.models.EmploeeResponce;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 
 public class EmploeeControllerServEmpl implements EmploeeControllerServ {
 
     private List<Emploee> listEmploee;
     private Set<Integer> setDepartment;
 
+    private final String MESSAGE_ERR = "Ошибка доступа. Откройте позже";
     public EmploeeControllerServEmpl(ConfigLoadData configLoadData){
-
         configLoadData.loadDataIntoRepository();
         listEmploee = configLoadData.getRepository().loadAllEmploee();
 
@@ -25,12 +28,10 @@ public class EmploeeControllerServEmpl implements EmploeeControllerServ {
     }
 
     private void existsDepartment(int department) throws EmployeeNotDataException {
-        setDepartment.stream()
-                .filter(item -> item == department)
-                .findAny()
-                .orElseThrow(()-> {throw new EmployeeNotDataException("Отдел не найден"); });
+        if (!setDepartment.contains(department)) {
+            throw new EmployeeNotDataException("Отдел не найден");
+        }
     }
-
 
     @Override
     public List<Emploee> allEmploeeForDepartment(int department) {
@@ -44,17 +45,14 @@ public class EmploeeControllerServEmpl implements EmploeeControllerServ {
 
     @Override
     public List<EmploeeResponce> allEmploee() {
-
-        var result = setDepartment.stream().map( item -> {
+        return setDepartment.stream().map( item -> {
             var lsEmploee = listEmploee
                     .stream()
                     .filter(emploee -> emploee.getDepartment() == item)
                     .collect(Collectors.toList());
 
             return new EmploeeResponce(item, lsEmploee);
-        });
-
-        return result.collect(Collectors.toList());
+        }).collect(Collectors.toList());
     }
 
     @Override
@@ -62,13 +60,10 @@ public class EmploeeControllerServEmpl implements EmploeeControllerServ {
 
         existsDepartment(department);
 
-        var stream = listEmploee
-                .stream()
-                .filter( item -> item.getDepartment() == department  );
-
-        var result = stream.min(CompareEmploee::compare);
-
-        return result.get();
+        return listEmploee.stream()
+                .filter( item -> item.getDepartment() == department)
+                .min(CompareEmploee::compare)
+                .orElseThrow(()-> {throw new EmployeeAccessErrorException(MESSAGE_ERR);});
     }
 
     @Override
@@ -76,13 +71,10 @@ public class EmploeeControllerServEmpl implements EmploeeControllerServ {
 
         existsDepartment(department);
 
-        var stream = listEmploee
-                .stream()
-                .filter( item -> item.getDepartment() == department  );
-
-        var result = stream.max(CompareEmploee::compare);
-
-        return result.get();
+        return listEmploee.stream()
+                .filter( item -> item.getDepartment() == department  )
+                .max(CompareEmploee::compare)
+                .orElseThrow(()-> {throw new EmployeeAccessErrorException(MESSAGE_ERR);});
     }
 
     @Override
