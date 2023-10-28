@@ -2,20 +2,14 @@ package lesson208.models;
 
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.sql.In;
 
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Emploee {
     @Id
     private String id;
@@ -29,7 +23,6 @@ public class Emploee {
 
         return  (int) (Math.random() * (max - min) + min);
     }
-
     public static String getRandomUUID(){
         return UUID.randomUUID().toString();
     }

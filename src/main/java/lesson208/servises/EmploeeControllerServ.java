@@ -1,17 +1,17 @@
 package lesson208.servises;
 
 import lesson208.models.Emploee;
-import lesson208.models.EmploeeService;
+import lesson208.models.EmploeeResponce;
 
 import java.util.List;
 import java.util.Set;
 
-public interface EmploeeServ {
+public interface EmploeeControllerServ {
     List<Emploee> allEmploeeForDepartment(int department);
-    List<EmploeeService> allEmploee();
+    List<EmploeeResponce> allEmploee();
 
-    Integer minSalary(int department);
-    Integer maxSalary(int department);
+    Emploee minSalary(int department);
+    Emploee maxSalary(int department);
 
     Integer amountDepartment();
 
