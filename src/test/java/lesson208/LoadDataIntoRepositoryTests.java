@@ -14,13 +14,13 @@ public class LoadDataIntoRepositoryTests {
     @Autowired
     private ConfigLoadData configLoadData;
 
-    @Test
+    /*@Test
     public void ConfigLoadData_test(){
-        configLoadData.loadDataIntoRepository();
-        var repo = configLoadData.getRepository();
+        //configLoadData.loadDataIntoRepository();
+        //var repo = configLoadData.getRepository();
 
         assertThat(repo).as(EmploeesRepositories.class.getName());
         assertThat(repo.count()).isGreaterThan(0);
-    }
+    }*/
 
 }

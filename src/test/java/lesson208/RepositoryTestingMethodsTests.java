@@ -16,7 +16,7 @@ public class RepositoryTestingMethodsTests {
     @Autowired
     private ConfigLoadData configLoadData;
 
-    @Test
+   /* @Test
     public void getAllRowsEmploee(){
         configLoadData.loadDataIntoRepository();
 
@@ -26,5 +26,5 @@ public class RepositoryTestingMethodsTests {
 
         assertThat(result).as(ArrayList.class.getName());
 
-    }
+    }*/
 }

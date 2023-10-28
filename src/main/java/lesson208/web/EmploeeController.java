@@ -17,11 +17,8 @@ import java.util.Set;
 @RequestMapping("/departments")
 public class EmploeeController {
 
+    @Autowired
     private EmploeeControllerServEmpl emploeeServEmpl;
-
-    public EmploeeController(ConfigLoadData configLoadData){
-        emploeeServEmpl = new EmploeeControllerServEmpl(configLoadData);
-    }
 
     @GetMapping(path = "max-salary/{department}")
     public Emploee maxSalary(@PathVariable("department") Integer department ){

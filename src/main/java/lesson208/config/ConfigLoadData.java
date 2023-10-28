@@ -2,25 +2,23 @@ package lesson208.config;
 
 import lesson208.models.Emploee;
 import lesson208.repositories.EmploeesRepositories;
-import lombok.NoArgsConstructor;
+import lesson208.servises.EmploeeControllerServEmpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
-@Configuration
-@NoArgsConstructor
-public class ConfigLoadData {
+
+@Component
+public class ConfigLoadData implements CommandLineRunner {
 
     @Autowired
     private EmploeesRepositories repo;
 
-    @Bean
-    public EmploeesRepositories getRepository() {
-        return repo;
-    }
+    @Autowired
+    private EmploeeControllerServEmpl emploeeControllerServEmpl ;
 
-    @Bean
-    public void loadDataIntoRepository(){
+    @Override
+    public void run(String... args)  {
         try {
             repo.deleteAll();
 
@@ -33,8 +31,11 @@ public class ConfigLoadData {
             repo.save(new Emploee(null, 0, "София Бородина", 1, 45000));
             repo.save(new Emploee(null, 0, "Алиса Беляева", 3, 900000));
 
+            emploeeControllerServEmpl.fill(repo);
+
         } catch (Exception ex) {
             System.out.println("err: " + ex.getMessage());
         }
     }
+
 }

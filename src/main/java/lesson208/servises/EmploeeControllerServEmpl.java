@@ -5,27 +5,30 @@ import lesson208.exceptionAPI.EmployeeAccessErrorException;
 import lesson208.exceptionAPI.EmployeeNotDataException;
 import lesson208.models.Emploee;
 import lesson208.models.EmploeeResponce;
+import lesson208.repositories.EmploeesRepositories;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+@Component
 public class EmploeeControllerServEmpl implements EmploeeControllerServ {
 
     private List<Emploee> listEmploee;
     private Set<Integer> setDepartment;
-
     private final String MESSAGE_ERR = "Ошибка доступа. Откройте позже";
-    public EmploeeControllerServEmpl(ConfigLoadData configLoadData){
-        configLoadData.loadDataIntoRepository();
-        listEmploee = configLoadData.getRepository().loadAllEmploee();
 
+    public void fill(EmploeesRepositories repo){
+
+        listEmploee = repo.loadAllEmploee();
         setDepartment = listEmploee
                 .stream()
                 .map( item -> item.getDepartment())
                 .collect(Collectors.toSet());
     }
+
 
     private void existsDepartment(int department) throws EmployeeNotDataException {
         if (!setDepartment.contains(department)) {
